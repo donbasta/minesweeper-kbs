@@ -1,5 +1,7 @@
 import pygame, sys, time, threading
 from pygame.locals import *
+
+mov = [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 0], [0, 1], [-1, 0], [0, -1]]
  
 # Initialize program
 pygame.init()
@@ -30,18 +32,47 @@ def drawSquareInside(x, y):
 
 
 def drawNumber(num, x, y):
-    text = font.render(str(num), True, (0, 0, 0))
-    pygame.draw.rect(DISPLAYSURF, DARKGREY, (x * 50 + 3, y * 50 + 3, 47, 47))
-    DISPLAYSURF.blit(text, [50 * x + 17, 50 * y + 12])
+    if(num == 0):
+        pygame.draw.rect(DISPLAYSURF, DARKGREY, (x * 50 + 3, y * 50 + 3, 47, 47))
+    elif (num == -1):
+        pygame.draw.rect(DISPLAYSURF, DARKGREY, (x * 50 + 3, y * 50 + 3, 47, 47))
+        pygame.draw.circle(DISPLAYSURF, COL, (x * 50 + 25, y * 50 + 25), 12)
+    else:
+        text = font.render(str(num), True, (0, 0, 0))
+        pygame.draw.rect(DISPLAYSURF, DARKGREY, (x * 50 + 3, y * 50 + 3, 47, 47))
+        DISPLAYSURF.blit(text, [50 * x + 17, 50 * y + 12])
+
+siz = 5
+def createMat(mat):
+    mat_baru = [[0 for j in range(siz)] for i in range(siz)]
+    for i in range(siz):
+        for j in range(siz):
+            if(mat[i][j] == 1):
+                mat_baru[i][j] = -1
+            else:
+                cnt = 0
+                for k in range(8):
+                    newi = i + mov[k][0]
+                    newj = j + mov[k][1]
+                    if(newi >= 0 and newi < siz and newj >= 0 and newj < siz and mat[newi][newj] == 1):
+                        cnt += 1
+                
+                mat_baru[i][j] = cnt
+
+    return mat_baru
 
 
+
+
+mat1 = [[0, 0, 0, 0, 1], [0, 0, 1, 0, 0], [0, 0, 0, 0, 0], [0, 1, 1, 0, 1], [0, 0, 1, 0, 1]]
+mat_status = [[0 for j in range(siz)] for i in range(siz)]
+rep_mat = createMat(mat1)
 
 def doother():
-    for i in range(10):
-        for j in range(10):
+    for i in range(siz):
+        for j in range(siz):
             time.sleep(1)
-            drawSquareInside(i, j)
-            drawNumber(2, i, j)
+            drawNumber(rep_mat[i][j], i, j)
 
 x = threading.Thread(target=doother, args=())
 x.start()
