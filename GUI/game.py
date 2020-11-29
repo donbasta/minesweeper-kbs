@@ -1,9 +1,9 @@
-import pygame, sys, time, threading
+import pygame, sys
 from pygame.locals import *
 
 mov = [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 0], [0, 1], [-1, 0], [0, -1]]
  
-# Initialize program
+# Initialize PyGame
 pygame.init()
 pygame.font.init()
 myfont = pygame.font.SysFont('None', 20)
@@ -15,20 +15,23 @@ WHITE = (240, 240, 240)
 COL = (233, 12, 89)
  
 # Setup a 300x300 pixel display with caption
-DISPLAYSURF = pygame.display.set_mode((500,500))
+DISPLAYSURF = pygame.display.set_mode((500,700))
 DISPLAYSURF.fill(WHITE)
-pygame.display.set_caption("Edann")
-# Select the font to use, size, bold, italics
+pygame.display.set_caption("Minesweeper Ojan Rafi Sidiq")
 font = pygame.font.SysFont('Calibri', 35, True, False)
 
 
+# Function2 untuk menggambar di PyGame
+
 def drawLine():
-    for i in range(10):
+    for i in range(11):
         pygame.draw.rect(DISPLAYSURF, GREY, (i * 50, 0, 3, 500))
         pygame.draw.rect(DISPLAYSURF, GREY, (0, i * 50, 500, 3))
 
-def drawSquareInside(x, y):
-    pygame.draw.rect(DISPLAYSURF, COL, (x * 50 + 3, y * 50 + 3, 47, 47))
+def drawNextButton():
+    text = font.render("Next", True, WHITE)
+    pygame.draw.rect(DISPLAYSURF, COL, (200, 575, 100, 50))
+    DISPLAYSURF.blit(text, [215, 585])
 
 
 def drawNumber(num, x, y):
@@ -43,19 +46,8 @@ def drawNumber(num, x, y):
         DISPLAYSURF.blit(text, [50 * x + 17, 50 * y + 12])
 
 
-file_input = open('input.txt')
-lines = file_input.readlines()
-
-siz = int(lines[0])
-
-mat1 = [[0 for j in range(siz)] for i in range(siz)]
-mat_status = [[0 for j in range(siz)] for i in range(siz)]
-
-for i in range(2, len(lines)):
-    a = lines[i].split(", ")
-    mat1[int(a[0])][int(a[1])] = 1
-
-def createMat(mat):
+# Function untuk membuat representasi matriks
+def createMat(mat, siz):
     mat_baru = [[0 for j in range(siz)] for i in range(siz)]
     for i in range(siz):
         for j in range(siz):
@@ -74,12 +66,22 @@ def createMat(mat):
     return mat_baru
 
 
-rep_mat = createMat(mat1)
+# Baca input.txt dan ambil state gamenya
+file_input = open('input.txt')
+lines = file_input.readlines()
 
-for i in range(siz):
-    for j in range(siz):
-        print(rep_mat[i][j], end=" ")
-    print()
+siz = int(lines[0])
+
+ketemuMines = False
+mat1 = [[0 for j in range(siz)] for i in range(siz)]
+mat_status = [[0 for j in range(siz)] for i in range(siz)]
+
+for i in range(2, len(lines)):
+    a = lines[i].split(", ")
+    mat1[int(a[0])][int(a[1])] = 1
+
+
+rep_mat = createMat(mat1, siz)
 
 
 
@@ -88,7 +90,6 @@ for i in range(siz):
 # x,y harus belum dibuka
 def openCell(i, j):
     if(rep_mat[i][j] > 0):
-        print("hihi ", i, j)
         mat_status[i][j] = 1
     elif (rep_mat[i][j] == 0):
         mat_status[i][j] = 1
@@ -106,12 +107,34 @@ def updateDisplay():
                 drawNumber(rep_mat[i][j], j, i)
 
 
-# def doother():
-#     openCell(0, 0)
-#     updateDisplay()
+def checkWinCondition():
+    if(ketemuMines):
+        return -1
+    else:
+        win = True
+        for i in range(siz):
+            for j in range(siz):
+                if(rep_mat[i][j] != -1 and mat_status[i][j] == 0):
+                    win = False 
+        if(win):
+            return 1
+        else: 
+            return 0
 
-# x = threading.Thread(target=doother, args=())
-# x.start()
+
+def showLosePage():
+    text = font.render("You Lose!", True, COL)
+    DISPLAYSURF.blit(text, [180, 630])
+
+def showWinPage():
+    text = font.render("You Win!", True, COL)
+    DISPLAYSURF.blit(text, [180, 630])
+
+
+# CLIPS Jalanin didalam sini ya yang next movenya
+
+def getNextMove():
+    return 0, 0
 
 
 # Beginning Game Loop
@@ -119,6 +142,7 @@ while True:
     pygame.display.update()
 
     drawLine()
+    drawNextButton()
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -127,9 +151,26 @@ while True:
             mouse_pos = event.pos 
             x = mouse_pos[0] // 50
             y = mouse_pos[1] // 50
-            openCell(y, x)
-            updateDisplay()
-            print(mouse_pos)
+            x, y = y, x
+
+            if(x < siz and y < siz):
+                openCell(x, y)
+
+                if(rep_mat[x][y] == -1):
+                    ketemuMines = True
+                updateDisplay()
+            else:
+                # klik next button
+                if(x >= 11 and x <= 12 and y >= 4 and y <= 5):
+                    nextx, nexty = getNextMove()
+                    openCell(nextx, nexty)
+                    updateDisplay()
+            checkNumber = checkWinCondition()
+            if(checkNumber == -1):
+                showLosePage()
+            elif(checkNumber == 1):
+                showWinPage()
+
 
 
     
