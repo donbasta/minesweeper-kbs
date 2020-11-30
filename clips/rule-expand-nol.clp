@@ -1,4 +1,5 @@
 (defrule expand_nol_pojok
+    (declare (salience 1000))
     (pojok ?i ?j)
     (isi ?i ?j 0)
     (adjacent ?x1 ?y1 ?i ?j)
@@ -10,6 +11,7 @@
 )
 
 (defrule expand_nol_sisi
+    (declare (salience 999))
     (sisi ?i ?j)
     (isi ?i ?j 0)
     (adjacent ?x1 ?y1 ?i ?j)
@@ -21,6 +23,7 @@
 )
 
 (defrule expand_nol_tengah
+    (declare (salience 998))
     (tengah ?i ?j)
     (isi ?i ?j 0)
     (adjacent ?a1 ?b1 ?i ?j)

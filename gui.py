@@ -1,5 +1,7 @@
 import pygame, sys
 from pygame.locals import *
+from agent import KBAgent
+from utils import *
 
 mov = [[1, 1], [1, -1], [-1, -1], [-1, 1], [1, 0], [0, 1], [-1, 0], [0, -1]]
  
@@ -67,7 +69,8 @@ def createMat(mat, siz):
 
 
 # Baca input.txt dan ambil state gamenya
-file_input = open('input.txt')
+file_input_path = sys.argv[1]
+file_input = open(file_input_path)
 lines = file_input.readlines()
 
 siz = int(lines[0])
@@ -80,12 +83,8 @@ for i in range(2, len(lines)):
     a = lines[i].split(", ")
     mat1[int(a[0])][int(a[1])] = 1
 
-
+agent = KBAgent(file_input_path)
 rep_mat = createMat(mat1, siz)
-
-
-
-
 
 # x,y harus belum dibuka
 def openCell(i, j):
@@ -99,11 +98,10 @@ def openCell(i, j):
             if(newi >= 0 and newi < siz and newj >= 0 and newj < siz and mat_status[newi][newj] == 0):
                 openCell(newi, newj) 
 
-
 def updateDisplay():
     for i in range(siz):
         for j in range(siz):
-            if(mat_status[i][j] == 1):
+            if (mat_status[i][j] == 1):
                 drawNumber(rep_mat[i][j], j, i)
 
 
@@ -162,8 +160,7 @@ while True:
             else:
                 # klik next button
                 if(x >= 11 and x <= 12 and y >= 4 and y <= 5):
-                    nextx, nexty = getNextMove()
-                    openCell(nextx, nexty)
+                    rep_mat, mat_status = agent.return_board()
                     updateDisplay()
             checkNumber = checkWinCondition()
             if(checkNumber == -1):
@@ -171,6 +168,10 @@ while True:
             elif(checkNumber == 1):
                 showWinPage()
 
-
-
+    
+    
+    
+    
+    
+    
     

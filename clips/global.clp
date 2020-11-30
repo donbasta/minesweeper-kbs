@@ -1,1 +1,1 @@
-(defglobal ?*B-SIZE* = 8)
+(defglobal ?*B-SIZE* = 9)

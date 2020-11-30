@@ -1,91 +1,13 @@
 import clips
 import sys
-
-def load_game(fpath):
-    game_config = {}
-    with open(fpath, "r") as f:
-        game_config["board_size"] = int(f.readline())
-        game_config["num_bombs"] = int(f.readline())
-        num_bombs = game_config["num_bombs"]
-        game_config["loc_bombs"] = []
-        for i in range(num_bombs):
-            loc = list(map(int, f.readline().split(',')))
-            game_config["loc_bombs"].append(loc)
-    return game_config
-
-def generate_e(game_config):
-    b = game_config["board_size"]
-    board = [[0 for i in range(b)] for i in range(b)]
-    bombs = [[False for i in range(b)] for i in range(b)]
-    E = [[None for i in range(b)] for i in range(b)]
-    for [x, y] in game_config["loc_bombs"]:
-        bombs[x][y] = True
-    dx = [0, 1, 1, 1, 0, -1, -1, -1]
-    dy = [1, 1, 0, -1, -1, -1, 0, 1]
-    for i in range(b):
-        for j in range(b):
-            if bombs[i][j]:
-                continue
-            cnt_bombs = 0
-            for k in range(8):
-                ni = i + dx[k]
-                nj = j + dy[k]
-                if ni < 0 or ni >= b or nj < 0 or nj >= b:
-                    continue
-                if bombs[ni][nj]:
-                    cnt_bombs += 1
-            E[i][j] = cnt_bombs
-    return E
-
-def handle_ask_isi(env, E):
-    list_ask_isi = []
-    list_retract = []
-    for fact in env.facts():
-        fact_str = str(fact)
-        if (fact_str.find("ask-isi") > -1):
-            # print("~~~~~~")
-            # print(str(fact).split(" "))
-            x = int(fact_str[-4])
-            y = int(fact_str[-2])
-            list_ask_isi.append("(isi {} {} {})".format(x, y, E[x][y]))
-            # fact.retract()
-    return list_ask_isi
-
-def handle_bomb(env, board):
-    list_tandain_bomb = []
-    for fact in env.facts():
-        if (str(fact).find("(bomb") > -1):
-            list_tandain_bomb.append(fact)
-    for fact in list_tandain_bomb:
-        euy = []
-        print("faxxx: " + str(fact))
-        for x in str(fact):
-            # print("x: " + x)
-            if x.isdigit():
-                euy.append(int(x))
-        # print("euy", euy)
-        # assert len(euy) == 2
-        x = euy[-2]
-        y = euy[-1]
-        board[x][y] = "x" #tandain sebuah kotak jadi bom
-        #TODO: tandain kotak (x,y) itu bom di GUInya, atau di board
-    return board
-
-def print_board(board):
-    for row in board:
-        for cell in row:
-            print(cell, end=' ')
-        print()
+from utils import *
 
 def main():
     env = clips.Environment()
-    # env.watch = True
 
     game_file_name = sys.argv[1]
-    print("game file name: {}".format(game_file_name))
 
     game_config = load_game(game_file_name)
-    assert [0, 0] not in game_config["loc_bombs"]
 
     print("Game Configuration for the agent:")
     print(game_config)
@@ -133,66 +55,47 @@ def main():
             env.assert_string("(unknown {} {})".format(row, col))
     
     E = generate_e(game_config)
-    # print(E)
     
-    # env.run(1)
     global_file_path = './clips/global.clp'
     with open(global_file_path, 'w') as global_file:
         global_file.write("(defglobal ?*B-SIZE* = {})".format(b))
     env.load(global_file_path)
-    # env.load('./clips/rule-pattern-1-1-adjacent.clp')
+    env.load('./clips/rule-expand-nol.clp')
+    env.load('./clips/rule-pattern-1-1-adjacent.clp')
     env.load('./clips/rule-pattern-1-2-adjacent.clp')
     env.load('./clips/rule-pattern-1-2-1.clp')
-    env.load('./clips/rule-expand-nol.clp')
     env.load('./clips/rule-pattern.clp')
     env.load('./clips/rule-pojok.clp')
     env.load('./clips/rule-sisi.clp')
     env.load('./clips/rule-tengah.clp')
-    # for rule in env.rules():
-    #     print("Rules", rule)
 
     glob_b_size = env.find_global("B-SIZE")
-    print("board size: {}".format(glob_b_size.value))
-    
-    pattern_1 = env.find_rule("pattern_1")
-    print("Pattern 1 ditemukan: ", pattern_1)
-
-    expand_nol_pojok = env.find_rule("expand_nol_pojok")
-    expand_nol_sisi = env.find_rule("expand_nol_sisi")
-    expand_nol_tengah = env.find_rule("expand_nol_tengah")
 
     for rule in env.rules():
         rule.watch_firings = True
-    
-    i = 0
+
     while True:
+
         _ = input("press any key....") 
         print("-" * 50)
-        i += 1
-        print("after iteration {}".format(i))
-        env.run(1)
-        ask_isi_list = handle_ask_isi(env, E)
-        board = handle_bomb(env, board)
-        for fact_str in ask_isi_list:
-            # print("fact_str")
-            # print(fact_str)
-            # fact_split = fact_str.split(" ")
-            # print(fact_split)
-            x = int(fact_str[-6])
-            y = int(fact_str[-4])
-            z = int(fact_str[-2])
-            board[x][y] = z
-            # print("fact_str")
-            # print(fact_str)
-            try:
-                env.assert_string(fact_str)
-            except:
-                pass
-        # for fact in env.facts():
-        #     print(fact)
-        print("Board Condition")
+
+        to_be_fired_rule = None
+        for act in env.activations():
+            to_be_fired_rule = act.name
+            break
+
+        if to_be_fired_rule in ["expand_nol_pojok", "expand_nol_sisi", "expand_nol_tengah"]:
+            while to_be_fired_rule in ["expand_nol_pojok", "expand_nol_sisi", "expand_nol_tengah"]:
+                env.run(1)
+                board = handle_board(env, E, board)
+                for act in env.activations():
+                    to_be_fired_rule = act.name
+                    break
+        else:
+            env.run(1)
+            board = handle_board(env, E, board)
+            
         print_board(board)
-        print("-" * 50)
 
 
 if __name__ == "__main__":
