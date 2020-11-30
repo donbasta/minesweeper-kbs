@@ -38,5 +38,3 @@ Untuk melihat detail dari aplikasi kami, dapat dilihat file dokumen laporan kami
 - Farras Mohammad Hibban Faddila (13518017)
 - Fabian Zhafransyah (13518022)
 - Jun Ho Choi Hedyatmo (13518044)
-
-Fabian gak commmit jadi ini commitnya
