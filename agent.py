@@ -5,6 +5,7 @@ from utils import *
 class KBAgent():
     def __init__(self, config_path):
         self.env = clips.Environment()
+        print("strategy used: {}".format(self.env.strategy))
         print("config_path: ", config_path)
         self.game_config = load_game(config_path)
         self.rem_bombs = self.game_config["num_bombs"]
