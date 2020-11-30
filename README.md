@@ -4,15 +4,15 @@ __Minesweeper__ adalah permainan yang hanya dimainkan oleh satu pemain, dan tuju
 
 ## Screenshot Aplikasi
 
-![](img/tampilan-awal.png)
+![](img/tampilan-awal.jpg)
 
-![](img/a.png)
+![](img/a.jpg)
 
-![](img/b.png)
+![](img/b.jpg)
 
-![](img/c.png)
+![](img/c.jpg)
 
-![](img/you-win.png)
+![](img/you-win.jpg)
 
 ## Cara Menjalankan Aplikasi
 
