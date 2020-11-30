@@ -43,6 +43,9 @@
     (test (= ?c2 2))
     (isi ?a3 ?b3 ?c3)
     (test (= ?c3 1))
+    (or (sisi ?a1 ?b1) (pojok ?a1 ?b1))
+    (sisi ?a2 ?b2)
+    (or (sisi ?a3 ?b3) (pojok ?a3 ?b3))
 
     (successive ?a4 ?b4 ?a5 ?b5 ?a6 ?b6)
     (adjacent-by-edge ?a1 ?b1 ?a4 ?b4)

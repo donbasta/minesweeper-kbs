@@ -66,7 +66,7 @@ class KBAgent():
         self.env.load('./clips/rule-expand-nol.clp')
         self.env.load('./clips/rule-pattern-1-1-adjacent.clp')
         self.env.load('./clips/rule-pattern-1-2-adjacent.clp')
-        # self.env.load('./clips/rule-pattern-1-2-1.clp')
+        self.env.load('./clips/rule-pattern-1-2-1.clp')
         self.env.load('./clips/rule-pattern.clp')
         self.env.load('./clips/rule-pojok.clp')
         self.env.load('./clips/rule-sisi.clp')
