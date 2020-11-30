@@ -1,18 +1,20 @@
 # Minesweeper Knowledge Based System
 
-__Minesweeper__ adalah permainan yang hanya dimainkan oleh satu pemain, dan tujuan dari game ini adalah membersihkan lahan tanpa mengenai bom/ranjau. Permainan berlangsung hingga semua ranjau telah diketahui posisinya. Permainan minesweeper sendiri juga sudah cukup dikenal kebanyakan orang. Kami telah membuat __Agen Minesweeper__ pada aplikasi kami yang mengimplementasikan _knowledge based system_ berupa _rule of representation_, _construction of inference engine_, dan _knowledge base construction_.
+__Minesweeper__ adalah permainan yang hanya dimainkan oleh satu pemain, dan tujuan dari game ini adalah membersihkan lahan tanpa mengenai bom/ranjau. Permainan berlangsung hingga semua ranjau telah diketahui posisinya. Permainan minesweeper sendiri juga sudah cukup dikenal kebanyakan orang.
+
+Kami telah membuat __Agen Minesweeper__ pada aplikasi kami yang mengimplementasikan _knowledge based system_ berupa _rule of representation_, _construction of inference engine_, dan _knowledge base construction_.
 
 ## Screenshot Aplikasi
 
-![](img/tampilan-awal.jpg)
+![tampilan-awal](img/tampilan-awal.jpg)
 
-![](img/a.jpg)
+![a](img/a.jpg)
 
-![](img/b.jpg)
+![b](img/b.jpg)
 
-![](img/c.jpg)
+![c](img/c.jpg)
 
-![](img/menang.jpg)
+![menang](img/menang.jpg)
 
 ## Cara Menjalankan Aplikasi
 
@@ -34,7 +36,10 @@ Untuk melihat detail dari aplikasi kami, dapat dilihat file dokumen laporan kami
 
 ## Kontributor
 
+<!-- Jika Anda membaca ini maka saya mau ngasih tau bahwa kami menggunakan live share pada visual studio code, jadi tidak terlihat commit aslinya :)
+      Ada hadiah link: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+-->
 - Muhammad Hasan (13518012)
 - Farras Mohammad Hibban Faddila (13518017)
-- Fabian Zhafransyah (13518022)
+- Fabian Zhafransyah (13518022) 
 - Jun Ho Choi Hedyatmo (13518044)
