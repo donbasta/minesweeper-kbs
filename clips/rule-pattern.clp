@@ -40,11 +40,11 @@
     ; ; (printout t "Bebas 4" crlf)
     (unknown ?a8 ?b8)
     ?r8 <- (unknown ?a8 ?b8)
-    (adjacent-by-edge ?a7 ?b7 ?a9 ?b9)
-    (adjacent-by-edge ?a6 ?b6 ?a9 ?b9)
-    (test (not (and (= ?a9 ?a2) (= ?b9 ?b2))))
-    (not (unknown ?a9 ?b9))
-    (not (bomb ?a9 ?b9))
+    ; (adjacent-by-edge ?a7 ?b7 ?a9 ?b9)
+    ; (adjacent-by-edge ?a6 ?b6 ?a9 ?b9)
+    ; (test (not (and (= ?a9 ?a2) (= ?b9 ?b2))))
+    ; (not (unknown ?a9 ?b9))
+    ; (not (bomb ?a9 ?b9))
 
 =>
     ;a8 b8 aman

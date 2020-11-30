@@ -74,7 +74,7 @@ def main():
     env = clips.Environment()
     # env.watch = True
 
-    game_config = load_game('game.txt')
+    game_config = load_game('game2.txt')
     assert [0, 0] not in game_config["loc_bombs"]
 
     print("Game Configuration for the agent:")
