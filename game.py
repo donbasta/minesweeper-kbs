@@ -74,7 +74,7 @@ def main():
     env = clips.Environment()
     # env.watch = True
 
-    game_config = load_game('game1.txt')
+    game_config = load_game('game.txt')
     assert [0, 0] not in game_config["loc_bombs"]
 
     print("Game Configuration for the agent:")
@@ -133,8 +133,20 @@ def main():
     env.load('./clips/rule-pojok.clp')
     env.load('./clips/rule-sisi.clp')
     env.load('./clips/rule-tengah.clp')
-    for rule in env.rules():
-        print("Rules", rule)
+    # for rule in env.rules():
+    #     print("Rules", rule)
+    
+    pattern_1 = env.find_rule("pattern_1")
+    print("Pattern 1 ditemukan: ", pattern_1)
+    pattern_1.watch_firings = True
+
+    expand_nol_pojok = env.find_rule("expand_nol_pojok")
+    expand_nol_sisi = env.find_rule("expand_nol_sisi")
+    expand_nol_tengah = env.find_rule("expand_nol_tengah")
+
+    expand_nol_pojok.watch_firings = True
+    expand_nol_sisi.watch_firings = True
+    expand_nol_tengah.watch_firings = True
     
     i = 0
     while True:
@@ -153,8 +165,8 @@ def main():
             y = int(fact_split[2])
             z = int(fact_split[3][:-1])
             board[x][y] = z
-            print("fact_str")
-            print(fact_str)
+            # print("fact_str")
+            # print(fact_str)
             try:
                 env.assert_string(fact_str)
             except:
