@@ -12,7 +12,7 @@ __Minesweeper__ adalah permainan yang hanya dimainkan oleh satu pemain, dan tuju
 
 ![](img/c.jpg)
 
-![](img/you-win.jpg)
+![](img/menang.jpg)
 
 ## Cara Menjalankan Aplikasi
 

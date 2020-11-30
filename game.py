@@ -69,8 +69,6 @@ def main():
     env.load('./clips/rule-sisi.clp')
     env.load('./clips/rule-tengah.clp')
 
-    glob_b_size = env.find_global("B-SIZE")
-
     for rule in env.rules():
         rule.watch_firings = True
 
@@ -94,7 +92,7 @@ def main():
         else:
             env.run(1)
             board = handle_board(env, E, board)
-            
+
         print_board(board)
 
 
