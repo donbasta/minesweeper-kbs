@@ -1,27 +1,3 @@
-; (defrule expand_nol_pojok
-;     (pojok ?i ?j)
-;     (isi ?i ?j 0)
-;     (unknown ?a&~?i ?j)
-;     (unknown ?i ?b&~?j)
-;     (unknown ?a ?b)
-;     (adjacent ?a ?j ?i ?j)
-;     (adjacent ?a ?b ?i ?j)
-;     (adjacent ?i ?b ?i ?j)
-;     ?f <- (unknown ?a ?j)
-;     ?g <- (unknown ?i ?b)
-;     ?h <- (unknown ?a ?b)
-;     => 
-;     (assert (safe ?a ?j))
-;     (retract ?f)
-;     (assert (ask-isi ?a ?j))
-;     (assert (safe ?i ?b))
-;     (retract ?g)
-;     (assert (ask-isi ?i ?b))
-;     (assert (safe ?a ?b))
-;     (retract ?h)
-;     (assert (ask-isi ?a ?b))
-; )
-
 (defrule expand_nol_pojok
     (pojok ?i ?j)
     (isi ?i ?j 0)
