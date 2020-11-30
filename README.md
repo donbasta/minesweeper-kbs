@@ -4,15 +4,15 @@ __Minesweeper__ adalah permainan yang hanya dimainkan oleh satu pemain, dan tuju
 
 ## Screenshot Aplikasi
 
-![](screenshot/tampilan-awal.png)
+![](img/tampilan-awal.png)
 
-![](screenshot/a.png)
+![](img/a.png)
 
-![](screenshot/b.png)
+![](img/b.png)
 
-![](screenshot/c.png)
+![](img/c.png)
 
-![](screenshot/you-win.png)
+![](img/you-win.png)
 
 ## Cara Menjalankan Aplikasi
 
@@ -24,9 +24,13 @@ __Minesweeper__ adalah permainan yang hanya dimainkan oleh satu pemain, dan tuju
 >>> pip install clipspy
 ```
 4. Buka command prompt pada hasil ekstraksi repository, lalu jalankan perintah berikut.
-```py
+```
 python gui.py game_config/game4.txt
 ```
+
+## Dokumen Aplikasi
+
+Untuk melihat detail dari aplikasi kami, dapat dilihat file dokumen laporan kami [disini](./docs/laporan.pdf).
 
 ## Kontributor
 
